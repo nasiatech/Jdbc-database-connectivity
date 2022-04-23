@@ -1,16 +1,22 @@
+package Andrew;
+
 import java.sql.SQLException;
 
 public class JdbcCrud extends Conn {
 
-    public void createData(){
+
+    public void createData(String username, String password){
 
         conn = Conn.createConnection();
-        final String QUERY = "INSERT into users (username, password)  values ('andrew', 'bblabla')";
+        final String QUERY = "INSERT into users (username, password)  values (?, ?)";
         try {
             System.out.println("=======================================================");
             System.out.println("Inserting");
-            System.out.println("=======================================================");
-            int result = conn.createStatement().executeUpdate(QUERY);
+            System.out.println("=======================================================\n");
+            stmt1 = conn.prepareStatement(QUERY);
+            stmt1.setString(1,username);
+            stmt1.setString(2, password);
+            int result = stmt1.executeUpdate();
             if(result >= 1){
                 System.out.println("Insertion successful");
                 System.out.println("did "+result +" Insertions");
@@ -23,15 +29,14 @@ public class JdbcCrud extends Conn {
     //working readData
     public void readData(){
         final String QUERY = "SELECT * from users";
-        conn = Conn.createConnection();
         try {
             stmt = conn.createStatement();
-            System.out.println("Executing ReadOperation");
+            System.out.println("Executing Read Operation");
             rs = stmt.executeQuery(QUERY);
 
-            System.out.println("===================================================");
+            System.out.println("\n\n===================================================");
             System.out.println("Data Received");
-            System.out.println("===================================================");
+            System.out.println("===================================================\n\n");
             while(rs.next()){
                 System.out.println("ID: "+rs.getInt("userid") + " UserName: " +rs.getString("username") + "UserPassword: "+rs.getString("password"));
             }
@@ -42,19 +47,21 @@ public class JdbcCrud extends Conn {
 
 
 
-    public void updateUserName(){
-
-        final String query = "UPDATE users set username = 'myUsename' where userid = 2 ";
+    public void updateUserName(int id, String username){
+        conn = Conn.createConnection();
         try {
-            stmt = conn.prepareStatement(query);
-            System.out.println("============================================================");
+            final String query = "UPDATE users  SET username=? where userid=?";
+            stmt1 = conn.prepareStatement(query);
+            stmt1.setString(1,username);
+            stmt1.setInt(2, id);
+            System.out.println("\n\n============================================================");
             System.out.println("Updating Username");
-            System.out.println("============================================================");
-            int rs = stmt.executeUpdate(query);
+            System.out.println("============================================================\n");
+            int rs = stmt1.executeUpdate();
             if(rs>=1){
                 System.out.println("Succesfully updated username");
             }
-            stmt.close();
+            stmt1.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

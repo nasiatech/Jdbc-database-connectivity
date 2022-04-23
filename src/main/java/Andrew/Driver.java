@@ -1,11 +1,11 @@
-import java.sql.*;
+package Andrew;
 
-public class Driver extends JdbcCrud{
+public class Driver{
     public static void main(String[] args) {
         JdbcCrud j = new JdbcCrud();
-        j.createData();
+        j.createData("Nfon", "mypassword");
         j.readData();
         j.deleteData(1);
-        j.updateUserName();
+        j.updateUserName(23,"tatadrew");
     }
 }

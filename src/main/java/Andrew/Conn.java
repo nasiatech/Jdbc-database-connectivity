@@ -1,8 +1,11 @@
+package Andrew;
+
 import java.sql.*;
 
 public class Conn {
     //create a database connection here
     Statement stmt = null;
+    PreparedStatement stmt1 = null;
     Connection conn = null;
     ResultSet rs = null;
 
