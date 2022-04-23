@@ -2,11 +2,19 @@ import java.sql.SQLException;
 
 public class JdbcCrud extends Conn {
 
-    public void createData(String username, String password){
+    public void createData(){
+
         conn = Conn.createConnection();
-        final String QUERY = "INSERT into users (username, password)  values  (" +username+ "," + password+ ";";
+        final String QUERY = "INSERT into users (username, password)  values ('andrew', 'bblabla')";
         try {
-            conn.createStatement().executeUpdate(QUERY);
+            System.out.println("=======================================================");
+            System.out.println("Inserting");
+            System.out.println("=======================================================");
+            int result = conn.createStatement().executeUpdate(QUERY);
+            if(result >= 1){
+                System.out.println("Insertion successful");
+                System.out.println("did "+result +" Insertions");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -18,6 +26,7 @@ public class JdbcCrud extends Conn {
         conn = Conn.createConnection();
         try {
             stmt = conn.createStatement();
+            System.out.println("Executing ReadOperation");
             rs = stmt.executeQuery(QUERY);
 
             System.out.println("===================================================");
@@ -33,12 +42,18 @@ public class JdbcCrud extends Conn {
 
 
 
-    public void updateUserName(int userId, String userName){
+    public void updateUserName(){
 
-        final String query = "UPDATE users set username = " + userName +  "where userid = " +userId + "; ";
+        final String query = "UPDATE users set username = 'myUsename' where userid = 2 ";
         try {
             stmt = conn.prepareStatement(query);
-            stmt.executeUpdate(query);
+            System.out.println("============================================================");
+            System.out.println("Updating Username");
+            System.out.println("============================================================");
+            int rs = stmt.executeUpdate(query);
+            if(rs>=1){
+                System.out.println("Succesfully updated username");
+            }
             stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
