@@ -7,7 +7,7 @@ public class Conn {
     ResultSet rs = null;
 
     static Connection connection;
-    static final String DB_URL = "jdbc:mysql://localhost/platform";
+    static final String DB_URL = "jdbc:mysql://localhost/php_users";
     static final String USER = "root";
     static final String PASS = "";
 
